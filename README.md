@@ -9,7 +9,8 @@ Generate Material You themes from wallpaper images. Rust port of Android's wallp
 ```bash
 monet <wallpaper.png> [options]
   --strategy material|java   Scoring strategy (default: material)
-  --output, -o <file>        Save JSON to file instead of stdout
+  --output, -o <file>        Save output to file instead of stdout
+  --seed-only                Output only the seed color hex
 ```
 
 ## References

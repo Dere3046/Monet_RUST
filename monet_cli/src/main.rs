@@ -36,12 +36,14 @@ fn main() {
         eprintln!("Usage: monet <wallpaper_path> [options]");
         eprintln!("  --strategy material|java   Scoring strategy (default: material)");
         eprintln!("  --output, -o <file>        Save JSON output to file instead of stdout");
+        eprintln!("  --seed-only                Output only the seed color hex");
         process::exit(1);
     }
 
     let image_path = &args[1];
     let strategy = parse_strategy(&args);
     let output_path = parse_output(&args);
+    let seed_only = parse_seed_only(&args);
 
     let img = match open(image_path) {
         Ok(img) => img,
@@ -53,6 +55,20 @@ fn main() {
 
     let wallpaper_colors = WallpaperColors::from_bitmap_with_strategy(img, 0.0, strategy);
     let seed = *wallpaper_colors.primary_color();
+
+    if seed_only {
+        let output = format!("{}\n", seed.to_hex_with_pound());
+        if let Some(path) = output_path {
+            if let Err(e) = fs::write(path, &output) {
+                eprintln!("Failed to write output file: {}", e);
+                process::exit(1);
+            }
+        } else {
+            print!("{}", output);
+        }
+        return;
+    }
+
     let seed_u32 = argb_to_u32(seed);
     let hints = format!("{:?}", wallpaper_colors.color_hints());
 
@@ -95,6 +111,10 @@ fn parse_output(args: &[String]) -> Option<&str> {
         }
     }
     None
+}
+
+fn parse_seed_only(args: &[String]) -> bool {
+    args.iter().any(|arg| arg == "--seed-only")
 }
 
 fn build_output(seed: Argb, seed_u32: u32, hints: String, theme: Theme) -> ThemeOutput {

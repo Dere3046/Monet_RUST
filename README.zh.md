@@ -9,7 +9,8 @@
 ```bash
 monet <wallpaper.png> [options]
   --strategy material|java   评分策略（默认：material）
-  --output, -o <file>        保存 JSON 到文件而非标准输出
+  --output, -o <file>        保存输出到文件而非标准输出
+  --seed-only                仅输出种子颜色十六进制值
 ```
 
 ## 参考
