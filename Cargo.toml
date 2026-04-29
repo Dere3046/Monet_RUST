@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "wallpaper_colors",
+    "monet_cli",
+]
+resolver = "2"

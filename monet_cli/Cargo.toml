@@ -1,0 +1,19 @@
+[package]
+name = "monet_cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wallpaper_colors = { path = "../wallpaper_colors" }
+material-colors = { version = "0.4", features = ["std", "serde"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[[bin]]
+name = "monet"
+path = "src/main.rs"
+
+[[bin]]
+name = "create_test_image"
+path = "src/bin/create_test_image.rs"
