@@ -30,13 +30,11 @@ jobs:
         with:
           ndk-version: r26b
       - name: Build
-        run: |
-          cd rust
-          cargo ndk --target ${{ matrix.target }} -- build --release --bin monet
+        run: cargo ndk --target ${{ matrix.target }} -- build --release --bin monet
       - name: Package
         run: |
           mkdir -p dist
-          cp rust/target/${{ matrix.target }}/release/monet dist/monet-android-${{ matrix.target }}
+          cp target/${{ matrix.target }}/release/monet dist/monet-android-${{ matrix.target }}
       - uses: actions/upload-artifact@v4
         with:
           name: monet-android-${{ matrix.target }}
